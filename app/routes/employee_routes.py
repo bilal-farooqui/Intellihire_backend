@@ -176,7 +176,7 @@ async def login_employee(creds: LoginSchema = Body(...)):
 async def get_all_employees():
 
     employees = []
-    async for emp in employee_collection.find():
+    async for emp in employee_collection.find({"role": {"$nin": ["applicant", "Applicant"]}}):
         emp["_id"] = str(emp["_id"])
         # Password ko kabhi expose nahi karna
         emp.pop("password", None)

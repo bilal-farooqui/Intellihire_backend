@@ -17,7 +17,7 @@ async def get_admin_dashboard_stats(current_user=Depends(require_admin)):
     Fetches counts for employees, jobs, applications, and leaves in one call.
     """
     # 1. Get counts
-    employee_count = await employee_collection.count_documents({})
+    employee_count = await employee_collection.count_documents({"role": {"$nin": ["applicant", "Applicant"]}})
     job_count = await job_collection.count_documents({"is_active": True})
     application_count = await application_collection.count_documents({})
     
